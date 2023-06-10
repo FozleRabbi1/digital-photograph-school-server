@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Digital Photography",
+    "classTime": "Mondays, 6-8 PM",
+    "classDuration": "8 weeks",
+    "courseLength": "3 months",
+    "image": "https://thumbs.dreamstime.com/b/digital-camera-capturing-beautiful-landscape-32633207.jpg",
+    "instructorName": "John Smith",
+    "description": "Learn the fundamentals of digital photography, including camera settings, composition techniques, and basic editing. Suitable for beginners. Limited to 15 students.",
+    "numberOfStudents": 15,
+    "totalSit" : 35,
+    "price" : 250
+  },
+  {
+    "title": "Portrait Photography Masterclass",
+    "classTime": "Wednesdays, 7-9 PM",
+    "classDuration": "10 weeks",
+    "courseLength": "4 months",
+    "image": "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/2159092/settings_images/Tx7NLIwbRVGZT9rCCnPt_VIDEO.jpg",
+    "instructorName": "Jane Johnson",
+    "description": "Discover the art of capturing captivating portraits. From lighting setups to posing techniques, this course will help you master the art of portrait photography. Limited to 20 students.",
+    "numberOfStudents": 20,
+    "totalSit" : 35,
+    "price" : 300
+  },
+  {
+    "title": "Landscape Photography Workshop",
+    "classTime": "Saturdays, 10 AM - 1 PM",
+    "classDuration": "6 weeks",
+    "courseLength": "3 months",
+    "image": "https://colinjarvis.co.uk/wp-content/uploads/2021/01/group2-1.jpg",
+    "instructorName": "Michael Anderson",
+    "description": "Explore the beauty of landscapes through your camera lens. Learn about composition, exposure, and post-processing techniques to capture stunning outdoor images. Limited to 12 students.",
+    "numberOfStudents": 12,
+    "totalSit" : 35,
+    "price" : 250
+  },
+  {
+    "title": "Street Photography Intensive",
+    "classTime": "Tuesdays and Thursdays, 6-8 PM",
+    "classDuration": "5 weeks",
+    "courseLength": "3.5 months",
+    "image": "https://cdn-ffcgi.nitrocdn.com/ZhDYBbXPoHrCHvLPGOdQmXKAjZXwoPng/assets/static/optimized/rev-6496b27/wp-content/uploads/2020/01/34-chinatown-best-unique-photo-places-nyc.jpg",
+    "instructorName": "Emily Davis",
+    "description": "Immerse yourself in the world of street photography. Develop your observational skills, learn to anticipate moments, and tell compelling visual stories. Limited to 18 students.",
+    "numberOfStudents": 18,
+    "totalSit" : 35,
+    "price" : 450
+  },
+  {
+    "title": "Fashion Photography Masterclass",
+    "classTime": "Fridays, 5-7 PM",
+    "classDuration": "12 weeks",
+    "courseLength": "4.5 months",
+    "image": "https://liop.co.uk/wp-content/uploads/2023/04/feifei-xu-Fashion_studio_27_9_2020-1220.jpg",
+    "instructorName": "David Thompson",
+    "description": "Dive into the glamorous world of fashion photography. From editorial shoots to runway coverage, learn the techniques to capture stunning fashion images. Limited to 25 students.",
+    "numberOfStudents": 25,
+    "totalSit" : 35,
+    "price" : 550
+  },
+  {
+    "title": "Product Photography Workshop",
+    "classTime": "Sundays, 2-4 PM",
+    "classDuration": "4 weeks",
+    "courseLength": "3 months",
+    "image": "https://visualeducation.com/wp-content/uploads/2018/10/recorded.jpg",
+    "instructorName": "Sarah Wilson",
+    "description": "Master the art of product photography. Learn lighting setups, composition techniques, and post-processing skills to showcase products in their best light. Limited to 10 students.",
+    "numberOfStudents": 10,
+    "totalSit" : 35,
+    "price" : 450
+  },
+  {
+    "title": "Wildlife Photography Expedition",
+    "classTime": "Flexible schedule for field trips",
+    "classDuration": "8 weeks",
+    "courseLength": "4 months",
+    "image": "https://cdn.mos.cms.futurecdn.net/P7wRQAnKe33gddjS7WBFvm.jpg",
+    "instructorName": "Robert Parker",
+    "description": "Embark on thrilling field trips to capture the beauty of wildlife in their natural habitats. Learn techniques for wildlife photography and storytelling through images. Limited to 16 students.",
+    "numberOfStudents": 16,
+    "totalSit" : 35,
+    "price" : 250
+  },
+  {
+    "title": "Black and White Photography Workshop",
+    "classTime": "Mondays and Wednesdays, 6-8 PM",
+    "classDuration": "6 weeks",
+    "courseLength": "3.5 months",
+    "image": "https://www.howtophotographyourlife.com/wp-content/uploads/2020/01/New-Orleans-20180329-20170429-Lou_15.jpg",
+    "instructorName": "Laura Adams",
+    "description": "Discover the timeless elegance of black and white photography. Learn to see the world in shades of gray and master the art of monochrome compositions. Limited to 15 students.",
+    "numberOfStudents": 15,
+    "totalSit" : 35,
+    "price" : 280
+  },
+  {
+    "title": "Wedding Photography Masterclass",
+    "classTime": "Saturdays, 10 AM - 2 PM",
+    "classDuration": "10 weeks",
+    "courseLength": "4 months",
+    "image": "https://im.indiatimes.in/content/2021/Sep/wwp_6155a18465ab2.jpg",
+    "instructorName": "Daniel Roberts",
+    "description": "Capture the magic of weddings through your lens. From essential equipment to posing techniques, learn the skills needed to excel as a wedding photographer. Limited to 20 students.",
+    "numberOfStudents": 20,
+    "totalSit" : 35,
+    "price" : 580
+  },
+  {
+    "title": "Experimental Photography Workshop",
+    "classTime": "Thursdays, 6-9 PM",
+    "classDuration": "8 weeks",
+    "courseLength": "3.5 months",
+    "image": "https://www.arts.ac.uk/__data/assets/image/0030/88851/Experimental-Photography.jpg",
+    "instructorName": "Olivia Green",
+    "description": "Push the boundaries of traditional photography and explore experimental techniques. Learn to create unique and imaginative images through various unconventional methods. Limited to 12 students.",
+    "numberOfStudents": 12,
+    "totalSit" : 35,
+    "price" : 350
+  }
+]

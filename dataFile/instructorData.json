@@ -1,0 +1,72 @@
+[
+    {
+        "title": "Digital Photography",
+        "instructorName": "John Smith",
+        "image" : "https://careersmaster.ug/app/uploads/careers/ACN9Qwv4EM6MvKeGiqdTtHi0hywsrok_.jpg",
+        "numberOfStudents": 15,
+        "email": "johnsmith@example.com"
+    },
+    {
+        "title": "Portrait Photography Masterclass",
+        "instructorName": "Jane Johnson",
+        "image" : "https://thumbs.dreamstime.com/b/photographer-9975936.jpg",
+        "numberOfStudents": 20,
+        "email": "janejohnson@example.com"
+    },
+    {
+        "title": "Landscape Photography Workshop",
+        "instructorName": "Michael Anderson",
+        "image" : "https://threebestrated.in/images/PhotriyaStudios-Hyderabad-TS.png",
+        "numberOfStudents": 12,
+        "email": "michaelanderson@example.com"
+    },
+    {
+        "title": "Street Photography Intensive",
+        "instructorName": "Emily Davis",
+        "image" : "https://shoutoutla.com/wp-content/uploads/2021/08/c-PersonalEmilyDavis__Me0505212965_1621444328813.jpg",
+        "numberOfStudents": 18,
+        "email": "emilydavis@example.com"
+    },
+    {
+        "title": "Fashion Photography Masterclass",
+        "instructorName": "David Thompson",
+        "image" : "https://thelenssolutions.com/wp-content/uploads/2023/04/7-Basic-Tips-for-Taking-Good-Photographs.jpg",
+        "numberOfStudents": 25,
+        "email": "davidthompson@example.com"
+    },
+    {
+        "title": "Product Photography Workshop",
+        "instructorName": "Sarah Wilson",
+        "image" : "https://thumbs.dreamstime.com/b/excited-young-woman-shouting-camera-photographer-tripod-40690585.jpg",
+        "numberOfStudents": 10,
+        "email": "sarahwilson@example.com"
+    },
+    {
+        "title": "Wildlife Photography Expedition",
+        "instructorName": "Robert Parker",
+        "image" : "https://www.ziprecruiter.com/svc/fotomat/public-ziprecruiter/cms/889026084FreelancePhotographer.jpg",
+        "numberOfStudents": 16,
+        "email": "robertparker@example.com"
+    },
+    {
+        "title": "Black and White Photography Workshop",
+        "instructorName": "Laura Adams",
+        "image" : "https://inmenlo.com/wp-content/uploads/2016/03/Phillip-Nicholas_2014-by-Irene1.jpg",
+        "numberOfStudents": 15,
+        "email": "lauraadams@example.com"
+    },
+    {
+        "title": "Wedding Photography Masterclass",
+        "instructorName": "Daniel Roberts",
+        "image" : "https://thumbs.dreamstime.com/b/nature-photographer-male-mature-capturing-image-lying-ground-93231266.jpg",
+        "numberOfStudents": 20,
+        "email": "danielroberts@example.com"
+    },
+    {
+        "title": "Experimental Photography Workshop",
+        "instructorName": "Olivia Green",
+        "image" : "https://www.adorama.com/alc/wp-content/uploads/2020/10/professional-photographer-outdoor-feature.jpg",
+        "numberOfStudents": 12,
+        "email": "oliviagreen@example.com"
+    }
+ ]
