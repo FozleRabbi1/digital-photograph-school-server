@@ -72,6 +72,15 @@ async function run() {
       res.send(result)
     })
 
+    // added more course by instructor
+    // app.post("/courses", verifyJWT, verifyInstructor, async (req, res) => {  //TODO verify korte hobe 
+    
+    app.post("/courses", verifyJWT, async (req, res) => {
+      const newCurse = req.body;
+      const result = await courseCullection.insertOne(newCurse);   /// added bistro Menu cullection
+      res.send(result)
+    })
+
 
     app.get("/instructors", async (req, res) => {
       const result = await instructorsCullection.find().sort({ numberOfStudents: -1 }).toArray();
