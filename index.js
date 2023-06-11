@@ -12,12 +12,12 @@ app.use(express.json());
 
 const verifyJWT = (req, res, next) => {
   const authorization = req.headers.authorization;
-  console.log(authorization)
+  // console.log(15, authorization)
   if (!authorization) {
     return res.status(401).send({ error: true, message: "unauthorize access" })
   }
   const token = authorization.split(" ")[1];
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.SECRET_JWT_TOKEN, (err, decoded) => {
     if (err) {
       return res.status(401).send({ error: true, message: "unauthorize access" })
     }
@@ -53,7 +53,8 @@ async function run() {
     })
 
 
-    //=============================>>>>>> user cullection 
+
+
     app.post("/users", async (req, res) => {
       const user = req.body;
       const query = { email: user.email }
@@ -85,15 +86,107 @@ async function run() {
     })
 
     //=================================>>>     get Course API
-    app.get("/course", async (req, res) => {
-      const result = await AddCourseCullection.find().toArray();
+    // app.get("/course", async (req, res) => {
+    //   const result = await AddCourseCullection.find().toArray();
+    //   res.send(result)
+    // })
+
+
+    app.get("/course", verifyJWT, async (req, res) => {
+      const email = req.query.email;
+      if (!email) {
+        return res.send([])
+      }
+      const decodedEmail = req.decoded?.email;
+      if (decodedEmail !== email) {
+        return res.status(403).send({ error: true, message: "forbidden access" })
+      }
+      const query = { email: email }
+      const result = await AddCourseCullection.find(query).toArray()
+      // console.log(result)
       res.send(result)
     })
+
+
     //=================================>>>   course delete Api
     app.delete("/course/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
       const result = await AddCourseCullection.deleteOne(query)
+      res.send(result)
+    })
+
+
+
+    //=============================>>>>>> user cullection  (Admin route)     ( ======Manage Users==== )
+    app.get("/users", async (req, res) => {
+      const result = await usersCullection.find().toArray();
+      res.send(result)
+    })
+    // ========================>>>>>>> make admin api
+    app.patch("/users/admin/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          role: "admin"
+        }
+      }
+      const result = await usersCullection.updateOne(query, updatedDoc)
+      res.send(result)
+
+    })
+    // ========================>>>>>>> make indtructor api
+    app.patch("/users/instructor/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          role: "instructor"
+        }
+      }
+      const result = await usersCullection.updateOne(query, updatedDoc)
+      res.send(result)
+
+    })
+    // ========================>>>>>>> make user api
+    app.patch("/users/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          role: "user"
+        }
+      }
+      const result = await usersCullection.updateOne(query, updatedDoc)
+      res.send(result)
+
+    })
+
+    //=====================>>>> isAdmin or Not API
+    app.get("/users/admin/:email", verifyJWT, async (req, res) => {
+      const email = req.params.email;
+
+      if (req.decoded.email !== email) {
+        return res.send({ admin: false })
+      }
+      const query = { email: email }
+      const user = await usersCullection.findOne(query);
+      const result = { admin: user?.role === "admin" };   // true/false return korbe
+      res.send(result)
+    })
+
+    //=====================>>>> isInstructor or Not API
+    app.get("/users/instructor/:email", verifyJWT, async (req, res) => {
+      const email = req.params.email;
+      // console.log(182, email)
+      if (req.decoded.email !== email) {
+        return res.send({ admin: false })
+      }
+      const query = { email: email }
+      const user = await usersCullection.findOne(query);
+      // console.log(188, user)
+      const result = { instructor: user?.role === "instructor" };   // true/false return korbe
       res.send(result)
     })
 
