@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const express = require('express')
 const app = express()
@@ -9,6 +9,22 @@ const jwt = require('jsonwebtoken');
 app.use(cors());
 app.use(express.json());
 
+
+const verifyJWT = (req, res, next) => {
+  const authorization = req.headers.authorization;
+  console.log(authorization)
+  if (!authorization) {
+    return res.status(401).send({ error: true, message: "unauthorize access" })
+  }
+  const token = authorization.split(" ")[1];
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ error: true, message: "unauthorize access" })
+    }
+    req.decoded = decoded;
+    next();
+  })
+}
 
 
 
@@ -24,23 +40,30 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // await client.connect();
+    //=================================>>>    await client.connect();
     const courseCullection = client.db("PhotographyCullection").collection("CoursesData");
     const instructorsCullection = client.db("PhotographyCullection").collection("AllinstructorsData");
     const usersCullection = client.db("PhotographyCullection").collection("usersData");
+    const AddCourseCullection = client.db("PhotographyCullection").collection("AddCourseData");
 
-    // ===========>>>>>> user cullection 
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.SECRET_JWT_TOKEN, { expiresIn: "1h" })
+      res.send({ token })
+    })
 
+
+    //=============================>>>>>> user cullection 
     app.post("/users", async (req, res) => {
       const user = req.body;
       const query = { email: user.email }
       const existingUser = await usersCullection.findOne(query)
       if (existingUser) {
-          return res.send({ message: "user already exists" })
+        return res.send({ message: "user already exists" })
       }
       const result = await usersCullection.insertOne(user);
       res.send(result);
-  })
+    })
 
 
     app.get("/courses", async (req, res) => {
@@ -51,9 +74,30 @@ async function run() {
 
     app.get("/instructors", async (req, res) => {
       const result = await instructorsCullection.find().sort({ numberOfStudents: -1 }).toArray();
-      // const result = await instructorsCullection.find().toArray();
       res.send(result)
     })
+
+    //=================================>>>   added class  cullections 
+    app.post("/course", async (req, res) => {
+      const course = req.body;
+      const result = await AddCourseCullection.insertOne(course)
+      res.send(result)
+    })
+
+    //=================================>>>     get Course API
+    app.get("/course", async (req, res) => {
+      const result = await AddCourseCullection.find().toArray();
+      res.send(result)
+    })
+    //=================================>>>   course delete Api
+    app.delete("/course/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await AddCourseCullection.deleteOne(query)
+      res.send(result)
+    })
+
+
 
 
 
@@ -62,8 +106,6 @@ async function run() {
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
   }
 }
 run().catch(console.dir);
