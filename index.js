@@ -74,7 +74,7 @@ async function run() {
 
     // added more course by instructor
     // app.post("/courses", verifyJWT, verifyInstructor, async (req, res) => {  //TODO verify korte hobe 
-    
+
     app.post("/courses", verifyJWT, async (req, res) => {
       const newCurse = req.body;
       const result = await courseCullection.insertOne(newCurse);   /// added bistro Menu cullection
@@ -125,7 +125,7 @@ async function run() {
       res.send(result)
     })
 
-
+    // myClasses
 
     //=============================>>>>>> user cullection  (Admin route)     ( ======Manage Users==== )
     app.get("/users", async (req, res) => {
@@ -190,12 +190,37 @@ async function run() {
       const email = req.params.email;
       // console.log(182, email)
       if (req.decoded.email !== email) {
-        return res.send({ admin: false })
+        return res.send({ instructor: false })
       }
       const query = { email: email }
       const user = await usersCullection.findOne(query);
       // console.log(188, user)
       const result = { instructor: user?.role === "instructor" };   // true/false return korbe
+      res.send(result)
+    })
+
+    //=====================>>>> isInstructor or Not API
+    app.get("/users/instructorSetCourse/:email", verifyJWT, async (req, res) => {
+      const email = req.params.email;
+      // console.log(182, email)
+      if (req.decoded.email !== email) {
+        return res.send({ instructor: false })
+      }
+      const query = { email: email }
+      const user = await usersCullection.findOne(query);
+      // console.log(188, user)
+      const isInstructor = { instructor: user?.role === "instructor" };   // true/false return korbe
+
+      if (isInstructor) {
+        const result = await courseCullection.find(query).toArray()
+        return res.send(result)
+      }
+    })
+
+    app.delete("/myClasses/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await courseCullection.deleteOne(query)
       res.send(result)
     })
 
