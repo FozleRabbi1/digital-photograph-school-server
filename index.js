@@ -52,6 +52,16 @@ async function run() {
       res.send({ token })
     })
 
+    const verifyAmdin = async (req, res, next) => {
+      const email = req.decoded.email;
+      // console.log(email)
+      const query = { email: email };
+      const user = await usersCullection.findOne(query);
+      if (user?.role !== "admin") {
+        return res.status(403).send({ error: true, message: "forbidden access" })
+      }
+      next();
+    }
 
 
 
@@ -122,6 +132,27 @@ async function run() {
       res.send(result)
     })
 
+    app.get("/admin/feedback/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await courseCullection.findOne(query)
+      res.send(result)
+    })
+
+    app.patch("/admin/feedback/:id", async (req, res) => {
+      const id = req.params.id;
+      const feedbackData = req.body;
+      const query = { _id: new ObjectId(id) }
+      const updatedDoc = {
+        $set: {
+          feedBack:  feedbackData.feedBack
+        }
+      }
+      const result = await courseCullection.updateOne(query, updatedDoc)
+      res.send(result)
+
+    })
+
     //=================================>>>   added class  cullections 
     app.post("/course", async (req, res) => {
       const course = req.body;
@@ -168,7 +199,7 @@ async function run() {
       res.send(result)
     })
     // ========================>>>>>>> make admin api
-    app.patch("/users/admin/:id", async (req, res) => {
+    app.patch("/users/admin/:id", verifyJWT, verifyAmdin, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const updatedDoc = {
