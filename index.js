@@ -5,6 +5,7 @@ const app = express()
 const port = process.env.PORT || 5000;
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
+const stripe = require("stripe")(process.env.PAYMENT_SERCET_KEY);
 
 app.use(cors());
 app.use(express.json());
@@ -45,6 +46,7 @@ async function run() {
     const instructorsCullection = client.db("PhotographyCullection").collection("AllinstructorsData");
     const usersCullection = client.db("PhotographyCullection").collection("usersData");
     const AddCourseCullection = client.db("PhotographyCullection").collection("AddCourseData");
+    const paymentCullection = client.db("PhotographyCullection").collection("payments");
 
     app.post("/jwt", async (req, res) => {
       const user = req.body;
@@ -126,6 +128,41 @@ async function run() {
       res.send(result)
     })
 
+    //========>>>>  Payment data get Api
+    app.get("/getPaymentData/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await AddCourseCullection.findOne(query)
+      res.send(result)
+    })
+
+    app.post("/create-payment-intent", verifyJWT, async (req, res) => {
+      const { price } = req.body;
+      const amount = price * 100;
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "usd",
+        payment_method_types: ['card']
+      })
+
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      })
+    })
+
+    app.post("/payment", async (req, res) => {
+      const payment = req.body;
+      const insertResult = await paymentCullection.insertOne(payment);
+      const id = payment.classId;
+      console.log(157, id)
+      const query = { _id: new ObjectId(id) }
+      const findResult = await AddCourseCullection.findOne(query);
+      console.log(160, findResult);
+      const deleteResult = await AddCourseCullection.deleteOne(query);
+      console.log(162, deleteResult)
+
+      res.send( insertResult, deleteResult)
+    })
 
     app.get("/instructors", async (req, res) => {
       const result = await instructorsCullection.find().sort({ numberOfStudents: -1 }).toArray();
@@ -145,7 +182,7 @@ async function run() {
       const query = { _id: new ObjectId(id) }
       const updatedDoc = {
         $set: {
-          feedBack:  feedbackData.feedBack
+          feedBack: feedbackData.feedBack
         }
       }
       const result = await courseCullection.updateOne(query, updatedDoc)
