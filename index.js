@@ -69,13 +69,14 @@ async function run() {
 
     //===========>>> jar modde pending : "pending ache sei data classer moddhe shod hobe na"
     app.get("/courses", async (req, res) => {
-      const query = { pending: { $ne: "pending" } };
+      // const query = { pending: { $ne: ["pending", "denied"] } };
+      const query = { pending: { $nin: ["pending", "denied"] } };
       const result = await courseCullection.find(query).sort({ numberOfStudents: -1 }).toArray();
       res.send(result)
     })
 
     app.get("/AdminRouterCourses", async (req, res) => {
-      const query = { pending: { $in: ["pending", "approved"] } };
+      const query = { pending: { $in: ["pending", "approved", "denied"] } };
       const result = await courseCullection.find(query).sort({ numberOfStudents: -1 }).toArray();
       res.send(result)
     })
@@ -87,6 +88,18 @@ async function run() {
       const updatedDoc = {
         $set: {
           pending: "approved"
+        }
+      }
+      const result = await courseCullection.updateOne(query, updatedDoc);
+      res.send(result)
+    })
+
+    app.patch("/adminDeniedCourses/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const updatedDoc = {
+        $set: {
+          pending: "denied"
         }
       }
       const result = await courseCullection.updateOne(query, updatedDoc);
