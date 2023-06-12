@@ -67,13 +67,35 @@ async function run() {
     })
 
 
+    //===========>>> jar modde pending : "pending ache sei data classer moddhe shod hobe na"
     app.get("/courses", async (req, res) => {
-      const result = await courseCullection.find().sort({ numberOfStudents: -1 }).toArray();
+      const query = { pending: { $ne: "pending" } };
+      const result = await courseCullection.find(query).sort({ numberOfStudents: -1 }).toArray();
+      res.send(result)
+    })
+
+    app.get("/AdminRouterCourses", async (req, res) => {
+      const query = { pending: { $in: ["pending", "approved"] } };
+      const result = await courseCullection.find(query).sort({ numberOfStudents: -1 }).toArray();
+      res.send(result)
+    })
+
+    //=======================>>
+    app.patch("/adminAproveCourses/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const updatedDoc = {
+        $set: {
+          pending: "approved"
+        }
+      }
+      const result = await courseCullection.updateOne(query, updatedDoc);
       res.send(result)
     })
 
     // added more course by instructor
     // app.post("/courses", verifyJWT, verifyInstructor, async (req, res) => {  //TODO verify korte hobe 
+
 
     app.post("/courses", verifyJWT, async (req, res) => {
       const newCurse = req.body;
