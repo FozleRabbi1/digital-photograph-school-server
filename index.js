@@ -334,6 +334,19 @@ async function run() {
       res.send(result)
     })
 
+    app.patch('/courses/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const findedData = await courseCullection.findOne(query)
+      const updatedDoc = {
+        $set: {
+          numberOfStudents: findedData.numberOfStudents + 1
+        }
+      }
+      const result = await courseCullection.updateOne(query, updatedDoc)
+      res.send(result)
+    })
+
 
 
 
