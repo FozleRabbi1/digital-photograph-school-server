@@ -136,33 +136,7 @@ async function run() {
       res.send(result)
     })
 
-    app.post("/create-payment-intent", verifyJWT, async (req, res) => {
-      const { price } = req.body;
-      const amount = price * 100;
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount,
-        currency: "usd",
-        payment_method_types: ['card']
-      })
 
-      res.send({
-        clientSecret: paymentIntent.client_secret,
-      })
-    })
-
-    app.post("/payment", async (req, res) => {
-      const payment = req.body;
-      const insertResult = await paymentCullection.insertOne(payment);
-      const id = payment.classId;
-      console.log(157, id)
-      const query = { _id: new ObjectId(id) }
-      const findResult = await AddCourseCullection.findOne(query);
-      console.log(160, findResult);
-      const deleteResult = await AddCourseCullection.deleteOne(query);
-      console.log(162, deleteResult)
-
-      res.send( insertResult, deleteResult)
-    })
 
     app.get("/instructors", async (req, res) => {
       const result = await instructorsCullection.find().sort({ numberOfStudents: -1 }).toArray();
@@ -324,6 +298,39 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
       const result = await courseCullection.deleteOne(query)
+      res.send(result)
+    })
+
+
+
+    app.post("/create-payment-intent", verifyJWT, async (req, res) => {
+      const { price } = req.body;
+      const amount = price * 100;
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "usd",
+        payment_method_types: ['card']
+      })
+
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      })
+    })
+
+    app.post("/payment", async (req, res) => {
+      const payment = req.body;
+      const insertResult = await paymentCullection.insertOne(payment);
+      const id = payment.classId;
+      const query = { _id: new ObjectId(id) }
+      const deleteResult = await AddCourseCullection.deleteOne(query);
+
+      res.send({ insertResult, deleteResult })
+    })
+
+    app.get('/enroledCLass', async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email }
+      const result = await paymentCullection.find(query).sort({ date: -1 }).toArray();
       res.send(result)
     })
 
